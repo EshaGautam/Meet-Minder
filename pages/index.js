@@ -35,13 +35,36 @@ const meetupArr = [
     }
 ]
 
-const HomePage = () => {
+const HomePage = (props) => {
   return (
     <>
-     <MeetupList meetups={meetupArr}/>
+     <MeetupList meetups={props.meetups}/>
     </>
    
   )
+}
+
+// export async function getServerSideProps(){
+//     //here data will be fetched 
+//     return{
+//         props:{
+//             meetups: meetupArr
+//         }
+//     }
+// }
+
+export async function getStaticProps(){
+    //here data gets fetched during build or before the page get render
+
+    //will always return an object which contains props that has data
+    return {
+        props: {
+            meetups: meetupArr
+        },
+        revalidate:10
+
+    }
+
 }
 
 export default HomePage 

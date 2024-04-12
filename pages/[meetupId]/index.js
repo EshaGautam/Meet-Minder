@@ -1,11 +1,36 @@
-import React from 'react'
-import MeetupDetails from '../../components/meetups/MeetupDetails'
+import React from 'react';
+import MeetupDetails from '../../components/meetups/MeetupDetails';
 
-const Details = () => {
+const Details = (props) => {
   return (
-    
-    <MeetupDetails title='FIRST MEETUP' image='/photo-1471039497385-b6d6ba609f9c.avif' address='xyz-street' description='Join us for an evening of networking and insightful discussions on the latest trends in technology at Meetup-1!'/>
-  )
+    <MeetupDetails meetupData={props.meetupData} />
+  );
+};
+
+export async function getStaticPaths() {
+  return {
+    fallback: false,
+    paths: [
+      { params: { meetupId: 'm1' } },
+      { params: { meetupId: 'm2' } },
+      { params: { meetupId: 'm3' } }
+    ]
+  };
 }
 
-export default Details
+export async function getStaticProps(context) {
+  const meetupId = context.params.meetupId;
+  return {
+    props: {
+      meetupData: {
+        id: meetupId,
+        image: 'photo-1471039497385-b6d6ba609f9c.avif',
+        title: 'FIRST MEETUP',
+        address: 'xyz-street',
+        description: 'join us!'
+      }
+    }
+  };
+}
+
+export default Details;

@@ -4,13 +4,15 @@ import Card from '../ui/Card';
 
 const MeetupDetails = (props) => {
   return (
-    <Card>
-        <img src={props.image} className={classes.image}></img>
-        <h2 className={classes.content}>{props.title}</h2>
-        <h4 className={classes.content}>{props.address}</h4>
-        <p className={classes.para} >{props.description}</p>
+    <Card key ={props.meetupData.id}>
+        <img className={classes.image} src={props.meetupData.image}></img>
+        <h2 className={classes.content}>{props.meetupData.title}</h2>
+        <h4 className={classes.content}>{props.meetupData.address}</h4>
+        <p className={classes.para} >{props.meetupData.description}</p>
     </Card>
   )
 }
+
+
 
 export default MeetupDetails
