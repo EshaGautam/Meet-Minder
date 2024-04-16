@@ -1,25 +1,28 @@
-import { MongoClient } from "mongodb"
+import { MongoClient } from "mongodb";
 
-const handler=async(req,res)=>{
+const handler = async (req, res) => {
+    const client = await MongoClient.connect('mongodb+srv://newuser-601:3PNfrwIn9I1LTMRQ@cluster0.vzfdbfs.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0');
+    const db = client.db();
 
-if(req.method === 'POST'){
-    const data = req.body
-    const {title,image,address,description} = data
+    // Accessing the meetups collection
+    const meetupCollection = db.collection('new-meetups');
 
-    // connetiong to client using
-   const client= await MongoClient.connect('mongodb+srv://newuser-601:3PNfrwIn9I1LTMRQ@cluster0.vzfdbfs.mongodb.net/meetups?retryWrites=true&w=majority&appName=Cluster0')
-   const db = client.db()
+    if (req.method === 'POST') {
+        try {
+            const data = req.body;
+            const { title, image, address, description } = data;
 
-//   accessing all the meetups in the collections
-   const meetupCollection = db.collection('new-meetups')
+            // Sending data to the database
+            const result = await meetupCollection.insertOne(data);
+            client.close();
 
-// sending data to db 
-   const result = await meetupCollection.insertOne(data)
-   client.close()
+            // Sending a response to the client
+            res.status(201).json({ message: 'Data is successfully inserted' });
+        } catch (error) {
+            console.error("Error:", error);
+            res.status(500).json({ message: 'An error occurred while processing the request' });
+        }
+    }
+};
 
-//  sending response to client
-   res.status(201).json({message:'Data is successfully inserted'})
-}
-
-}
-export default handler
+export default handler;
