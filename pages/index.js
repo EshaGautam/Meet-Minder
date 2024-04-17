@@ -1,4 +1,5 @@
 import MeetupList from '../components/meetups/MeetupList'
+import Head from 'next/head'
 import { MongoClient } from 'mongodb'
 
 
@@ -39,6 +40,10 @@ import { MongoClient } from 'mongodb'
 const HomePage = (props) => {
   return (
     <>
+    <Head>
+      <title>Meet-Minder</title>
+      <meta name='description' content='Browse all the meetup held near by'></meta>
+    </Head>
      <MeetupList meetups={props.meetups}/>
     </>
    
