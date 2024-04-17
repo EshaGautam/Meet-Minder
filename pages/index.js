@@ -65,6 +65,7 @@ export async function getStaticProps(){
 
     const meetupArr = await meetupCollection.find().toArray()
     //will always return an object which contains props that has data
+    client.close()
     return {
         props: {
             meetups: meetupArr.map(meetup=>({
